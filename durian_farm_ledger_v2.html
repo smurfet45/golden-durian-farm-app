@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#376f33">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="สวนทุเรียน">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="./durian_farm_ledger_v2.webmanifest">
+<link rel="icon" href="./durian_farm_icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./durian_farm_icon.svg">
+<title>สวนทุเรียน</title>
+<style>
+:root{--bg:#f6f0e4;--bg2:#fffdf8;--card:rgba(255,253,248,.88);--text:#2b2218;--muted:#7d6e5d;--line:rgba(86,68,46,.14);--green:#2f8f62;--green2:#e7f5ec;--red:#cd693e;--red2:#fdebe4;--blue:#347ab7;--blue2:#e8f1fb;--gold:#aa6a1f;--gold2:#f8eddb;--shadow:0 18px 40px rgba(63,46,24,.08);--r:24px;--font:"SF Pro Display","SF Pro Text","Sukhumvit Set","Noto Sans Thai",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0} html{background:radial-gradient(circle at top left,rgba(236,186,84,.24),transparent 30%),radial-gradient(circle at top right,rgba(79,149,110,.18),transparent 28%),linear-gradient(180deg,#f9f4ea,#f5f0e6)} body{min-height:100vh;font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit} .app{width:min(100%,430px);margin:0 auto;padding:max(18px,env(safe-area-inset-top)) 14px calc(110px + env(safe-area-inset-bottom))}
+.hero{position:sticky;top:0;z-index:20;padding-top:8px;margin-bottom:14px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.hero-card{position:relative;overflow:hidden;padding:22px 18px 18px;border-radius:32px;background:linear-gradient(145deg,#376f33,#17462e);color:#f9f7f1;box-shadow:0 24px 40px rgba(18,43,29,.26)}
+.hero-card:before,.hero-card:after{content:"";position:absolute;border-radius:999px;background:rgba(255,255,255,.08)} .hero-card:before{width:160px;height:160px;top:-78px;right:-44px} .hero-card:after{width:112px;height:112px;left:-40px;bottom:-52px;background:rgba(247,212,140,.16)}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.12);font-size:12px;margin-bottom:14px;position:relative;z-index:1}
+h1{font-size:31px;line-height:1.08;font-weight:700;letter-spacing:-.03em;position:relative;z-index:1} .hero p{font-size:14px;color:rgba(249,247,241,.82);margin-top:6px;position:relative;z-index:1}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px;position:relative;z-index:1} .hero-stat{padding:12px 14px;border-radius:20px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.07)} .hero-stat span{display:block;font-size:12px;color:rgba(249,247,241,.74);margin-bottom:4px} .hero-stat strong{font-size:18px}
+.tabs{position:sticky;top:202px;z-index:18;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px 4px 2px;margin-bottom:14px}.tab{border:none;border-radius:18px;padding:12px 6px;background:rgba(255,253,248,.8);color:var(--muted);font-size:13px;font-weight:700;border:1px solid rgba(255,255,255,.45);box-shadow:0 10px 20px rgba(80,61,31,.05);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)} .tab.active{background:#2a2118;color:#fff9f1}
+.section{display:none;animation:up .28s ease}.section.active{display:block}@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.stack{display:grid;gap:14px}.card{background:var(--card);border:1px solid rgba(255,255,255,.6);border-radius:28px;padding:18px;box-shadow:var(--shadow);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.head h2,.head h3{font-size:18px;font-weight:700;letter-spacing:-.02em}.head p{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.4}.badge{min-width:42px;height:42px;border-radius:16px;display:grid;place-items:center;background:#f1eadc;font-size:18px}
+.month-filter{display:flex;gap:8px;overflow:auto;scrollbar-width:none}.month-filter::-webkit-scrollbar{display:none}.chip{border:none;flex:none;padding:10px 14px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:700;box-shadow:0 10px 18px rgba(91,69,38,.04)}.chip.active{background:linear-gradient(180deg,#3c3227,#211910);color:#fff8ee;border-color:transparent}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:12px}.metric{padding:16px;border-radius:22px;min-height:108px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid transparent}.metric .label{font-size:12px;color:rgba(43,34,24,.75);line-height:1.35}.metric .value{font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.08;word-break:break-word}.income{background:var(--green2)}.expense{background:var(--red2)}.wage{background:var(--blue2)}.net{background:var(--gold2)}.metric.income .value{color:var(--green)}.metric.expense .value{color:var(--red)}.metric.wage .value{color:var(--blue)}.metric.net .value{color:var(--gold)}
+.group{margin-bottom:12px}.group label{display:block;font-size:13px;color:var(--muted);font-weight:700;margin-bottom:7px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+input,select{width:100%;min-height:52px;border:none;border-radius:18px;padding:14px 15px;font-size:16px;background:#fff;border:1px solid var(--line);color:var(--text);appearance:none;-webkit-appearance:none} input::placeholder{color:#aa9a84} input:focus,select:focus{outline:none;border-color:rgba(47,143,98,.34);box-shadow:0 0 0 4px rgba(47,143,98,.09)}
+.btn{width:100%;border:none;border-radius:20px;padding:15px 18px;color:#fff;font-size:15px;font-weight:700;letter-spacing:.01em;box-shadow:0 16px 24px rgba(29,37,23,.16)} .g{background:linear-gradient(180deg,#3aa06f,#277955)} .r{background:linear-gradient(180deg,#dd7b4e,#c65c30)} .b{background:linear-gradient(180deg,#4f95d2,#2f73af)} .a{background:linear-gradient(180deg,#c4842c,#a76a1f)}
+.pair{display:flex;align-items:center;gap:12px;padding:14px;border-radius:22px;background:linear-gradient(135deg,#eef5ff,#ecf9f4);border:1px solid rgba(52,121,183,.1);margin-bottom:14px}.avs{position:relative;width:60px;height:42px;flex:none}.av1,.av2{position:absolute;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;border:2px solid rgba(255,255,255,.86)}.av1{left:0;top:2px;background:#b9d5fb;color:#1a5d9c}.av2{left:22px;top:4px;background:#b8ecd1;color:#146347}.pair-name{font-size:14px;font-weight:700}.pair-sub{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}.pair-amt{font-size:17px;font-weight:800;color:var(--blue)}
+.info{display:inline-flex;align-items:center;padding:10px 14px;border-radius:999px;background:rgba(255,248,231,.9);border:1px solid rgba(168,106,31,.14);color:#8c5a1f;font-size:12px;font-weight:700}.share{display:none;background:linear-gradient(135deg,#effaf3,#f6f4ea);border:1px solid rgba(47,143,98,.14);border-radius:24px;padding:16px;margin:4px 0 14px}.share-title{font-size:14px;font-weight:700;color:#19563c;margin-bottom:12px}.share-row{display:flex;justify-content:space-between;gap:12px;margin-bottom:9px}.share-row:last-child{margin-bottom:0}.share-label{font-size:13px;color:#41735c;line-height:1.4}.share-value{font-size:16px;font-weight:800;color:#164934;white-space:nowrap}.share hr{border:none;border-top:1px dashed rgba(47,143,98,.2);margin:10px 0}
+.list{display:grid;gap:10px}.item{display:flex;gap:12px;align-items:center;padding:14px;border-radius:22px;background:var(--bg2);border:1px solid var(--line)}.icon{width:42px;height:42px;border-radius:16px;display:grid;place-items:center;font-size:18px;flex:none}.icon.income{background:var(--green2)}.icon.expense{background:var(--red2)}.icon.wage{background:var(--blue2)}.icon.harvest{background:#edf6df}.icon.share{background:#eef2fc}.body{flex:1;min-width:0}.name{font-size:14px;font-weight:700;line-height:1.35;margin-bottom:3px}.sub{font-size:12px;color:var(--muted);line-height:1.4}.side{display:flex;align-items:center;gap:6px}.amt{font-size:14px;font-weight:800;white-space:nowrap}.amt.income{color:var(--green)}.amt.expense{color:var(--red)}.amt.wage{color:var(--blue)}.amt.harvest{color:#577d18}.amt.share{color:#4368b2}.del{width:30px;height:30px;border:none;border-radius:10px;background:rgba(43,34,24,.06);color:var(--muted);font-size:17px}.empty{text-align:center;padding:26px 18px;border-radius:22px;background:rgba(255,253,248,.6);color:var(--muted);font-size:14px;line-height:1.5;border:1px dashed rgba(87,68,45,.15)}
+.bottom{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);width:min(calc(100% - 24px),402px);padding:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom));border-radius:28px;background:rgba(31,25,18,.9);border:1px solid rgba(255,255,255,.08);box-shadow:0 24px 50px rgba(15,12,8,.35);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:30}.qa{display:grid;grid-template-columns:1fr 1fr;gap:10px}.q{border:none;border-radius:18px;padding:13px 12px;font-size:13px;font-weight:700;color:#fff9f0;background:rgba(255,255,255,.09)}.q.primary{background:linear-gradient(180deg,#3ea777,#2b7d5a)}
+.toast{position:fixed;left:50%;bottom:calc(94px + env(safe-area-inset-bottom));transform:translateX(-50%);background:rgba(33,27,20,.92);color:#fff9f0;padding:12px 18px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .28s,transform .28s;pointer-events:none;z-index:40;white-space:nowrap;box-shadow:0 18px 36px rgba(20,16,12,.25)}.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+@media (max-width:360px){.summary,.row,.hero-stats,.qa{grid-template-columns:1fr}.hero-card{padding:20px 16px 16px}h1{font-size:28px}.app{padding-left:10px;padding-right:10px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="hero"><div class="hero-card">
+    <div class="pill">Golden Durian Farm Ledger</div>
+    <h1>สวนทองคำ</h1><p id="header-sub">บัญชีรายรับรายจ่าย</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span>เดือนที่ดูอยู่</span><strong id="hero-month">-</strong></div>
+      <div class="hero-stat"><span>รายการเดือนนี้</span><strong id="hero-count">0 รายการ</strong></div>
+    </div>
+  </div></header>
+  <nav class="tabs">
+    <button class="tab active" onclick="showTab('summary',this)">ภาพรวม</button>
+    <button class="tab" onclick="showTab('add',this)">บันทึก</button>
+    <button class="tab" onclick="showTab('harvest',this)">ตัดผล</button>
+    <button class="tab" onclick="showTab('history',this)">ประวัติ</button>
+  </nav>
+  <main>
+    <section id="summary" class="section active"><div class="stack">
+      <div class="month-filter" id="mf-summary"></div>
+      <div class="summary">
+        <div class="metric income"><div class="label">รายรับทั้งหมด</div><div class="value" id="s-inc">฿0</div></div>
+        <div class="metric expense"><div class="label">รายจ่ายทั้งหมด</div><div class="value" id="s-exp">฿0</div></div>
+        <div class="metric wage"><div class="label">ค่าจ้างรายเดือน</div><div class="value" id="s-wage">฿0</div></div>
+        <div class="metric net"><div class="label">กำไรก่อนแบ่ง</div><div class="value" id="s-net">฿0</div></div>
+      </div>
+      <div class="card"><div class="head"><div><h2>รายการล่าสุด</h2><p>ดูความเคลื่อนไหวล่าสุดของสวนในเดือนที่เลือก</p></div><div class="badge">🧾</div></div><div id="recent-list" class="list"><div class="empty">ยังไม่มีรายการในเดือนนี้</div></div></div>
+    </div></section>
+    <section id="add" class="section"><div class="stack">
+      <div class="card"><div class="head"><div><h3>บันทึกรายรับ</h3><p>เพิ่มยอดขายทุเรียนหรือรายได้อื่นในสวน</p></div><div class="badge">🌿</div></div>
+        <div class="group"><label for="inc-desc">รายละเอียด</label><input id="inc-desc" type="text" placeholder="เช่น ขายทุเรียนมูซานคิง 50 กก."></div>
+        <div class="row">
+          <div class="group"><label for="inc-amount">จำนวนเงิน (฿)</label><input id="inc-amount" type="number" placeholder="0"></div>
+          <div class="group"><label for="inc-date">วันที่</label><input id="inc-date" type="date"></div>
+        </div>
+        <div class="group"><label for="inc-cat">หมวด</label><select id="inc-cat"><option>ขายทุเรียนสด</option><option>ทุเรียนแช่แข็ง</option><option>เงินอุดหนุน</option><option>อื่นๆ</option></select></div>
+        <button class="btn g" onclick="addTx('income')">+ บันทึกรายรับ</button>
+      </div>
+      <div class="card"><div class="head"><div><h3>บันทึกรายจ่าย</h3><p>เก็บต้นทุนของสวนไว้ครบทั้งค่าวัสดุและค่าดำเนินการ</p></div><div class="badge">🧺</div></div>
+        <div class="group"><label for="exp-desc">รายละเอียด</label><input id="exp-desc" type="text" placeholder="เช่น ปุ๋ยเคมี, ยาฆ่าแมลง, ค่าน้ำมัน"></div>
+        <div class="row">
+          <div class="group"><label for="exp-amount">จำนวนเงิน (฿)</label><input id="exp-amount" type="number" placeholder="0"></div>
+          <div class="group"><label for="exp-date">วันที่</label><input id="exp-date" type="date"></div>
+        </div>
+        <div class="group"><label for="exp-cat">หมวด</label><select id="exp-cat"><option>ปุ๋ย/ยา</option><option>อุปกรณ์</option><option>ค่าน้ำ/ไฟ</option><option>ขนส่ง</option><option>อื่นๆ</option></select></div>
+        <button class="btn r" onclick="addTx('expense')">+ บันทึกรายจ่าย</button>
+      </div>
+      <div class="card"><div class="head"><div><h3>จ่ายค่าจ้างรายเดือน</h3><p>จัดการค่าดูแลสวนแบบคงที่ได้จากหน้าจอเดียว</p></div><div class="badge">💼</div></div>
+        <div class="pair"><div class="avs"><div class="av1">สา</div><div class="av2">มี</div></div><div style="flex:1"><div class="pair-name">ผัว-เมีย คนดูแลสวน</div><div class="pair-sub">ค่าจ้างคงที่เดือนละ 2,000 บาท</div></div><div class="pair-amt">฿2,000</div></div>
+        <div class="group"><label for="wage-month">เดือนที่จ่าย</label><input id="wage-month" type="month"></div>
+        <div class="group"><label for="wage-note">หมายเหตุ</label><input id="wage-note" type="text" placeholder="เช่น เดือนมิถุนายน 2568"></div>
+        <button class="btn b" onclick="payWage()">จ่ายค่าจ้าง ฿2,000</button>
+      </div>
+    </div></section>
+    <section id="harvest" class="section"><div class="stack">
+      <div class="info">50/50 แบ่งกำไรเจ้าของสวนและคนดูแล</div>
+      <div class="card"><div class="head"><div><h3>บันทึกการตัดผล</h3><p>คำนวณรายได้ ต้นทุน และส่วนแบ่งให้เห็นทันที</p></div><div class="badge">🌳</div></div>
+        <div class="group"><label for="h-date">วันที่ตัดผล</label><input id="h-date" type="date"></div>
+        <div class="row">
+          <div class="group"><label for="h-kg">น้ำหนักรวม (กก.)</label><input id="h-kg" type="number" placeholder="0" oninput="calcHarvest()"></div>
+          <div class="group"><label for="h-price">ราคา/กก. (฿)</label><input id="h-price" type="number" placeholder="0" oninput="calcHarvest()"></div>
+        </div>
+        <div class="group"><label for="h-variety">พันธุ์ทุเรียน</label><select id="h-variety"><option>หมอนทอง</option><option>ก้านยาว</option><option>ชะนี</option><option>พวงมณี</option><option>มูซานคิง</option><option>อื่นๆ</option></select></div>
+        <div class="group"><label for="h-cost">รายจ่ายในการตัด (฿)</label><input id="h-cost" type="number" placeholder="เช่น ค่ารถ ค่าคนตัด" oninput="calcHarvest()"></div>
+        <div class="share" id="share-preview">
+          <div class="share-title">สรุปการแบ่งกำไรรอบนี้</div>
+          <div class="share-row"><span class="share-label">รายรับจากการขาย</span><span class="share-value" id="sh-revenue">฿0</span></div>
+          <div class="share-row"><span class="share-label">หักค่าใช้จ่ายตัดผล</span><span class="share-value" id="sh-cost" style="color:var(--red)">-฿0</span></div>
+          <hr>
+          <div class="share-row"><span class="share-label">กำไรสุทธิรอบนี้</span><span class="share-value" id="sh-profit">฿0</span></div>
+          <div class="share-row"><span class="share-label">ส่วนของเจ้าของสวน 50%</span><span class="share-value" id="sh-owner">฿0</span></div>
+          <div class="share-row"><span class="share-label">ส่วนของคนดูแล 50%</span><span class="share-value" id="sh-worker">฿0</span></div>
+        </div>
+        <button class="btn a" onclick="saveHarvest()">บันทึกและแบ่งกำไร</button>
+      </div>
+      <div class="card"><div class="head"><div><h3>ประวัติการตัดผล</h3><p>ดูผลผลิตและกำไรย้อนหลังทุกรอบ</p></div><div class="badge">📚</div></div><div id="harvest-list" class="list"><div class="empty">ยังไม่มีการตัดผล</div></div></div>
+    </div></section>
+    <section id="history" class="section"><div class="stack">
+      <div class="month-filter" id="mf-history"></div>
+      <div class="card"><div class="head"><div><h3>ประวัติรายการ</h3><p>ตรวจสอบรายการย้อนหลังของแต่ละเดือน</p></div><div class="badge">🗂️</div></div><div id="history-list" class="list"><div class="empty">ยังไม่มีรายการในเดือนนี้</div></div></div>
+    </div></section>
+  </main>
+</div>
+<div class="bottom"><div class="qa"><button class="q primary" onclick="goToTab('add')">+ เพิ่มรายการ</button><button class="q" onclick="goToTab('harvest')">ตัดผลวันนี้</button></div></div>
+<div class="toast" id="toast"></div>
+<script>
+let S=JSON.parse(localStorage.getItem("durian_v2")||"null")||{txs:[],harvests:[]},curMonth=getCurMonth();
+function getCurMonth(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")}
+function save(){localStorage.setItem("durian_v2",JSON.stringify(S))}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
+function fmt(n){return "฿"+Math.round(Math.abs(n)).toLocaleString("th-TH")}
+function thDate(s){return new Date(s).toLocaleDateString("th-TH",{day:"numeric",month:"short",year:"2-digit"})}
+function monthLabel(m){const[y,mo]=m.split("-");return new Date(y,mo-1,1).toLocaleDateString("th-TH",{month:"short",year:"2-digit"})}
+function escapeHTML(str){return String(str).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("show"),2200)}
+function getMonths(){const s=new Set(S.txs.map(t=>t.date.slice(0,7)));s.add(getCurMonth());return Array.from(s).sort().reverse()}
+function renderMonthFilters(){["mf-summary","mf-history"].forEach(id=>document.getElementById(id).innerHTML=getMonths().map(m=>`<button class="chip ${m===curMonth?"active":""}" onclick="setMonth('${m}')">${monthLabel(m)}</button>`).join(""))}
+function setMonth(m){curMonth=m;renderAll()}
+function filtered(){return S.txs.filter(t=>t.date.slice(0,7)===curMonth)}
+function updateHero(){const items=filtered();document.getElementById("header-sub").textContent="บัญชีเดือน "+monthLabel(curMonth);document.getElementById("hero-month").textContent=monthLabel(curMonth);document.getElementById("hero-count").textContent=items.length.toLocaleString("th-TH")+" รายการ"}
+function itemHTML(t){const map={income:["🌿","income","+"],expense:["🧺","expense","-"],wage:["💼","wage","-"],harvest:["🌳","harvest","+"],share:["🤝","share","-"]},[ico,cls,sign]=map[t.type]||["📝","income","+"];const cat=t.cat?" · "+t.cat:"";return `<div class="item"><div class="icon ${cls}">${ico}</div><div class="body"><div class="name">${escapeHTML(t.desc)}</div><div class="sub">${thDate(t.date)}${escapeHTML(cat)}</div></div><div class="side"><div class="amt ${cls}">${sign}${fmt(t.amount)}</div><button class="del" onclick="delTx('${t.id}')">×</button></div></div>`}
+function renderSummary(){const items=filtered(),inc=items.filter(t=>t.type==="income"||t.type==="harvest").reduce((a,b)=>a+b.amount,0),exp=items.filter(t=>t.type==="expense").reduce((a,b)=>a+b.amount,0),wage=items.filter(t=>t.type==="wage").reduce((a,b)=>a+b.amount,0),share=items.filter(t=>t.type==="share").reduce((a,b)=>a+b.amount,0),net=inc-exp-wage-share,el=document.getElementById("s-net");document.getElementById("s-inc").textContent=fmt(inc);document.getElementById("s-exp").textContent=fmt(exp);document.getElementById("s-wage").textContent=fmt(wage);el.textContent=(net<0?"-":"")+fmt(net);el.style.color=net>=0?"var(--green)":"var(--red)";document.getElementById("recent-list").innerHTML=[...items].reverse().slice(0,6).map(itemHTML).join("")||'<div class="empty">ยังไม่มีรายการในเดือนนี้</div>'}
+function renderHistory(){const items=[...filtered()].reverse();document.getElementById("history-list").innerHTML=items.map(itemHTML).join("")||'<div class="empty">ยังไม่มีรายการในเดือนนี้</div>'}
+function renderHarvests(){const hl=[...S.harvests].reverse();document.getElementById("harvest-list").innerHTML=hl.map(h=>`<div class="item"><div class="icon harvest">🌳</div><div class="body"><div class="name">${escapeHTML(h.variety)} ${h.kg} กก. × ฿${h.price}/กก.</div><div class="sub">${thDate(h.date)} · กำไรสุทธิ ${(h.profit<0?"-":"")+fmt(h.profit)} · แบ่งฝ่ายละ ${fmt(h.share)}</div></div><div class="side"><div class="amt harvest">${fmt(h.revenue)}</div><button class="del" onclick="delHarvest('${h.id}')">×</button></div></div>`).join("")||'<div class="empty">ยังไม่มีการตัดผล</div>'}
+function calcHarvest(){const kg=parseFloat(hKg.value)||0,price=parseFloat(hPrice.value)||0,cost=parseFloat(hCost.value)||0,revenue=kg*price,profit=revenue-cost,share=profit/2,box=document.getElementById("share-preview");if(kg>0&&price>0){box.style.display="block";shRevenue.textContent=fmt(revenue);shCost.textContent="-"+fmt(cost);shProfit.textContent=(profit<0?"-":"")+fmt(profit);shOwner.textContent=(share<0?"-":"")+fmt(share);shWorker.textContent=(share<0?"-":"")+fmt(share)}else box.style.display="none"}
+function addTx(type){if(type==="income"){const desc=incDesc.value.trim(),amount=parseFloat(incAmount.value),date=incDate.value||today(),cat=incCat.value;if(!desc||!amount)return toast("กรุณากรอกข้อมูลให้ครบ");S.txs.push({id:uid(),type:"income",desc,amount,date,cat});incDesc.value="";incAmount.value="";toast("บันทึกรายรับแล้ว")}else{const desc=expDesc.value.trim(),amount=parseFloat(expAmount.value),date=expDate.value||today(),cat=expCat.value;if(!desc||!amount)return toast("กรุณากรอกข้อมูลให้ครบ");S.txs.push({id:uid(),type:"expense",desc,amount,date,cat});expDesc.value="";expAmount.value="";toast("บันทึกรายจ่ายแล้ว")}save();renderAll()}
+function payWage(){const wm=wageMonth.value||curMonth,note=wageNote.value||"ค่าจ้างรายเดือน";S.txs.push({id:uid(),type:"wage",desc:"ค่าจ้างคนดูแลสวน ("+note+")",amount:2000,date:wm+"-01",cat:"ค่าจ้างคงที่"});save();wageNote.value="";toast("จ่ายค่าจ้าง ฿2,000 แล้ว");renderAll()}
+function saveHarvest(){const kg=parseFloat(hKg.value),price=parseFloat(hPrice.value),cost=parseFloat(hCost.value)||0,date=hDate.value||today(),variety=hVariety.value;if(!kg||!price)return toast("กรุณากรอกน้ำหนักและราคา");const revenue=kg*price,profit=revenue-cost,share=profit/2;S.harvests.push({id:uid(),date,variety,kg,price,cost,revenue,profit,share});S.txs.push({id:uid(),type:"harvest",desc:"ขายทุเรียน "+variety+" "+kg+" กก.",amount:revenue,date,cat:"การตัดผล"});if(cost>0)S.txs.push({id:uid(),type:"expense",desc:"ค่าใช้จ่ายตัด "+variety,amount:cost,date,cat:"การตัดผล"});S.txs.push({id:uid(),type:"share",desc:"ส่วนแบ่งคนดูแลสวน 50% ("+variety+")",amount:share,date,cat:"แบ่งกำไร"});save();hKg.value="";hPrice.value="";hCost.value="";document.getElementById("share-preview").style.display="none";toast("บันทึกการตัดผลเรียบร้อย");renderAll()}
+function delTx(id){S.txs=S.txs.filter(t=>t.id!==id);save();renderAll()}
+function delHarvest(id){S.harvests=S.harvests.filter(h=>h.id!==id);save();renderHarvests()}
+function showTab(name,btn){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));document.getElementById(name).classList.add("active");btn.classList.add("active");renderAll()}
+function goToTab(name){const map={summary:"ภาพรวม",add:"บันทึก",harvest:"ตัดผล",history:"ประวัติ"},btn=[...document.querySelectorAll(".tab")].find(t=>t.textContent.trim()===map[name]);if(btn){showTab(name,btn);window.scrollTo({top:0,behavior:"smooth"})}}
+function today(){return new Date().toISOString().slice(0,10)}
+function renderAll(){renderMonthFilters();updateHero();renderSummary();renderHistory();renderHarvests()}
+const incDesc=document.getElementById("inc-desc"),incAmount=document.getElementById("inc-amount"),incDate=document.getElementById("inc-date"),incCat=document.getElementById("inc-cat"),expDesc=document.getElementById("exp-desc"),expAmount=document.getElementById("exp-amount"),expDate=document.getElementById("exp-date"),expCat=document.getElementById("exp-cat"),wageMonth=document.getElementById("wage-month"),wageNote=document.getElementById("wage-note"),hDate=document.getElementById("h-date"),hKg=document.getElementById("h-kg"),hPrice=document.getElementById("h-price"),hVariety=document.getElementById("h-variety"),hCost=document.getElementById("h-cost"),shRevenue=document.getElementById("sh-revenue"),shCost=document.getElementById("sh-cost"),shProfit=document.getElementById("sh-profit"),shOwner=document.getElementById("sh-owner"),shWorker=document.getElementById("sh-worker");
+incDate.value=today();expDate.value=today();hDate.value=today();wageMonth.value=curMonth;renderAll();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./durian_farm_sw.js").catch(()=>{}))}
+</script>
+</body>
+</html>

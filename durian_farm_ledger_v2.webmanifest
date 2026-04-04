@@ -1,0 +1,25 @@
+{
+  "name": "สวนทุเรียน",
+  "short_name": "สวนทุเรียน",
+  "description": "แอพบันทึกรายรับรายจ่ายสวนทุเรียน",
+  "start_url": "./durian_farm_ledger_v2.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f0e4",
+  "theme_color": "#376f33",
+  "lang": "th",
+  "icons": [
+    {
+      "src": "./durian_farm_icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./durian_farm_icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

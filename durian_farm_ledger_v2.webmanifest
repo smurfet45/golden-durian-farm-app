@@ -1,12 +1,12 @@
 {
-  "name": "สวนทุเรียน",
-  "short_name": "สวนทุเรียน",
-  "description": "แอพบันทึกรายรับรายจ่ายสวนทุเรียน",
-  "start_url": "./durian_farm_ledger_v2.html",
+  "name": "สวนทองคำ",
+  "short_name": "สวนทองคำ",
+  "description": "แอพบันทึกรายรับรายจ่ายสวนทองคำ",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f6f0e4",
-  "theme_color": "#376f33",
+  "background_color": "#f8f2e3",
+  "theme_color": "#8f6a21",
   "lang": "th",
   "icons": [
     {

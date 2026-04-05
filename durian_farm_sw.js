@@ -1,6 +1,6 @@
 const CACHE_NAME = "durian-farm-ledger-v1";
 const ASSETS = [
-  "./durian_farm_ledger_v2.html",
+  "./index.html",
   "./durian_farm_ledger_v2.webmanifest",
   "./durian_farm_icon.svg"
 ];
@@ -28,7 +28,7 @@ self.addEventListener("fetch", event => {
         const copy = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)).catch(() => {});
         return response;
-      }).catch(() => caches.match("./durian_farm_ledger_v2.html"));
+      }).catch(() => caches.match("./index.html"));
     })
   );
 });
